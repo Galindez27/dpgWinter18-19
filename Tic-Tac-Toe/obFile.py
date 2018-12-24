@@ -28,8 +28,8 @@ class board:
             self.__field__.append([False, False, False])
             self.__owners__.append([-1,-1,-1])
     
-    def __decodeSpaceVal__(self, row, col):
-        return 1 + 3*(row-1) + (col -1)
+    def __decodeSpaceVal__(self, r, c):
+        return 3*(r) + (c)
                     
     def __getitem__(self, key):
         '''[] access operator overload. Allows for <Board>[0][0] for easy
@@ -45,7 +45,7 @@ class board:
         self.__owners__[key] = -1
         
     def __wincheck__(self):
-        for player in self.___playerSums__:
+        for player in self.__playerSums__:
             for x in range(2):
                 if player["row"][x] >= 15 or player["col"][x] >= 15:
                     raise wonGame
@@ -76,7 +76,8 @@ class board:
         self.__wincheck__()
     
     def playOn(self, row, col):
-        val = self.__decodeSpaceVal__(row, col)
+        val = self.__boardVals__[self.__decodeSpaceVal__(row-1, col-1)]
+        print(val)
         if (row > 3 or row < 1 or col > 3 or row < 1):
             raise badInput
         
@@ -91,6 +92,7 @@ class board:
             self.__playerSums__[(self.__owners__[col-1][row-1])]["diag"][0] += val
         if (row + col) == 4: #Upwards Diagonal
             self.__playerSums__[(self.__owners__[col-1][row-1])]["diag"][1] += val
+        self.__wincheck__()
         self.turn+=1
         self.turn%=2
     
@@ -116,11 +118,14 @@ class board:
         represent = ""
         represent += "Turn: Player %d\n" % self.turn
         for p in range(2):
-            represent += "\nPlayer %d Win vals:\n\tRows\n"
+            represent += "\nPlayer %d Win vals:\n\tRows\n\t" % p
             for x in range(3):
-                represent += str(self.__playerSums__[p]["rows"][x])
-            represent += "\tCols\n"
+                represent += " "+str(self.__playerSums__[p]["row"][x])
+            represent += "\n\tCols\n\t"
             for x in range(3):
-                represent += str(self.__playerSums__[p]["cols"][x])
+                represent += " "+str(self.__playerSums__[p]["col"][x])
+        represent+= "\n" + str(self)
+        return represent
+            
                 
         
