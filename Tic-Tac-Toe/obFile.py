@@ -18,6 +18,7 @@ class wonGame(Exception):
 
 class board:
     def __init__(self):
+        self.__playedOn__ = 0
         self.__field__ = []
         self.__owners__ = []
         self.__playerSums__ = [{"row":[0,0,0], "col":[0,0,0], "diag":[0,0]},
@@ -84,6 +85,7 @@ class board:
         if (self[row-1][col-1]):
             raise occupiedSpace
         
+        self.__playedOn__ += 1
         self.__field__[row-1][col-1] = True
         self.__owners__[row-1][col-1] = int(self.turn)
         self.__playerSums__[self.turn]["row"][row-1] += val
@@ -127,5 +129,6 @@ class board:
         represent+= "\n" + str(self)
         return represent
             
-                
-        
+    def isPlayable(self):
+        return self.__playedOn__ < 9
+         
