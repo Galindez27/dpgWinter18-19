@@ -1,1 +1,3 @@
 **/.spyprject/**
+**/*.o
+**/__pycache__
