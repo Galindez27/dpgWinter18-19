@@ -47,7 +47,7 @@ class board:
         
     def __wincheck__(self):
         for player in self.__playerSums__:
-            for x in range(2):
+            for x in range(3):
                 if player["row"][x] >= 15 or player["col"][x] >= 15:
                     raise wonGame
             if player["diag"][0] >= 15 or player["diag"][1] >= 15:
@@ -91,9 +91,9 @@ class board:
         self.__playerSums__[self.turn]["row"][row-1] += val
         self.__playerSums__[self.turn]["col"][col-1] += val
         if (row == col): #Downwards Diagonal
-            self.__playerSums__[(self.__owners__[col-1][row-1])]["diag"][0] += val
+            self.__playerSums__[self.turn]["diag"][0] += val
         if (row + col) == 4: #Upwards Diagonal
-            self.__playerSums__[(self.__owners__[col-1][row-1])]["diag"][1] += val
+            self.__playerSums__[self.turn]["diag"][1] += val
         self.__wincheck__()
         self.turn+=1
         self.turn%=2
@@ -126,6 +126,9 @@ class board:
             represent += "\n\tCols\n\t"
             for x in range(3):
                 represent += " "+str(self.__playerSums__[p]["col"][x])
+            represent += "\n\tDiags\n\t"
+            for x in range(2):
+                represent += " "+str(self.__playerSums__[p]["diag"][x])
         represent+= "\n" + str(self)
         return represent
             

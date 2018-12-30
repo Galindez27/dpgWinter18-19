@@ -1,11 +1,23 @@
+"""
+Tic-Tac-Toe
+
+Ver:	1.0
+Date:	12-29-2018
+Author: Jonathan D Galindez
+
+Run this file to play. Requires obFile.py to be in a
+import location.
+"""
+
 from obFile import *
 import signal
 import time
+import platform
 import os
 
 # In[0]
 # Determine OS and setup clear command
-plat = os.uname()[0]
+plat = platform.system()
 clearCommand = ""
 if (plat == "Linux" or plat == "macOS"):
 	clearCommand = "clear"
@@ -34,14 +46,16 @@ def newGameHandler(signum, frame):
 	print(str(gameBoard) + '\n')
 
 signal.signal(signal.SIGINT, quitHandler) #Link ctrl-c interrupt to quit handler
-signal.signal(signal.SIGQUIT, newGameHandler) #Link ctrl-\ intterupt to new game handler
+if plat != "Windows":
+    signal.signal(signal.SIGQUIT, newGameHandler) #Link ctrl-\ intterupt to new game handler, only works on Linux/macOS
 
 
 # In[3]
 # Gameplay
+playPieces = ['X', 'O']
 print("Input example for middle spot (row, col):\n\tPlay On: 2 2\nIgnore the 0 at the top of the frame.\n")
 while(gameBoard.isPlayable() and continuePlay):
-	print("Player %d's turn\n" % (gameBoard.turn+1))
+	print("Player %d's turn: %s's\n" % (gameBoard.turn+1, playPieces[gameBoard.turn]))
 	print(gameBoard)
 	playerIn = input("Play On: ").split(' ', 2)
 	inLen = len(playerIn)
@@ -56,7 +70,8 @@ while(gameBoard.isPlayable() and continuePlay):
 			print("ERROR: Bad input coordinates!\n")
 			time.sleep(1)
 		except wonGame:
-			print("Player %d Won!\n\n" % (gameBoard.turn + 1))
+			os.system(clearCommand)
+			print("Player %d Won!\n\n%s" % (gameBoard.turn + 1, str(gameBoard)))
 			while(True):
 				cont = input("Start a new game? [y/n]: ")
 				try:
@@ -66,13 +81,13 @@ while(gameBoard.isPlayable() and continuePlay):
 					elif cont.lower()[0] == 'n':
 						print("Quitting.\n")
 						continuePlay = False
-						exit(gameBoard.turn)
+						break
 					else:
 						raise Exception()
 				except:
 					print("ERROR: Bad input.\n")
 					del cont
-					sleep(1)
+					time.sleep(1)
 
 	elif inLen > 2:
 		print("ERROR: Too many inputs.\n")
