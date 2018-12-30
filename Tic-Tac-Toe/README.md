@@ -8,13 +8,13 @@ A simple python game with the intention of demonstrating object oriented program
 Make a playable game of tic tac toe on the command line.
 ~~<b>REACH:</b> Make a simple gui with point a click interaction.~~ -Tired of python, going to leave it as is.
 
-##Notes
+## Notes
 
 Originally started with the anaconda and spyder IDE as the enviroment, but switched to default python 3.7 running on command line as ther interface. <b>DOES NOT WORK WITH IPython CONSOLE. USE STANDARD COMMAND LINE. SEE BELOW</b>
 
 Built/Tested with python 3.7.1, I cannot garuntee it will work with anything else, but will most likely work with later versions. 
 
-##Instructions
+## Instructions
 1. Open or direct [cmd/powershell(Windows), terminal(linux/macOS)] to the Tic-Tac-Toe directory
 2. type "py driver.py" to start
 
