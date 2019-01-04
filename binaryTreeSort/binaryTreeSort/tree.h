@@ -4,32 +4,34 @@
 #include <stack>
 
 using namespace std;
-class Leaf {
+class Branch {
 public:
 	// Left signifies all those less than this, right is greater than this
-	Leaf* left;
-	Leaf* right;
-	Leaf* parent;
+	Branch* left;
+	Branch* right;
+	Branch* parent;
 	signed short int value;
+	signed short int times;
 
 	bool color; //B = False, R = True;
-
-	Leaf();
-	Leaf(signed short int);
+	Branch();
+	Branch(signed short int);
 
 	// Tree Operations
-	Leaf* rotateRight();
-	Leaf* rotateLeft();
+	Branch* rotateRight();
+	Branch* rotateLeft();
 
 
-	//~Leaf();
+	//~Branch();
 };
 
 class RBtree {
 private:
-	Leaf* root;
-	signed short int leaves;
-	
+	Branch* root;
+	signed short int depth;
+	signed short int nodes;
+	signed short int numInput;
+	void balance(Branch*);
 
 public:
 	void insert(signed short int);
