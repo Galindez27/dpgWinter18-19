@@ -17,6 +17,7 @@
 #include <stack>
 #include <limits>
 #include <string>
+#include <random>
 
 #include "tree.h"
 #endif //PCH_H

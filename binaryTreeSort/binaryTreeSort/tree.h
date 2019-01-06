@@ -14,6 +14,8 @@ public:
 	signed short int times;
 
 	bool color; //B = False, R = True;
+	bool root;
+
 	Branch();
 	Branch(signed short int);
 
@@ -27,15 +29,18 @@ public:
 
 class RBtree {
 private:
-	Branch* root;
+	Branch* rootNode;
 	signed short int depth;
 	signed short int nodes;
 	signed short int numInput;
 	void balance(Branch*);
+	void traverse(Branch*, stack<signed short int>*, bool*);
 
 public:
 	void insert(signed short int);
-	stack<signed short int> genStack(bool);
-	RBtree(signed short int); 
+	stack<signed short int>* genStack(bool leastToGreatest = true);
+	RBtree(signed short int);
+	signed short int getDepth();
+	signed short int getNodes();
 };
 
