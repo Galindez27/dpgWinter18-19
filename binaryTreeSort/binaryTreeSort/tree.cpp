@@ -24,9 +24,22 @@ Branch* Branch::rotateLeft() {
 	/*Perform a left rotation rooted at this Branch. Returns
 	the pivot Branch. See https://en.wikipedia.org/wiki/Tree_rotation for a better
 	diagram/explanation*/
+
 	Branch* piv = this->right; 
+	if (this->root) {
+		this->root = false;
+		piv->root = true;
+	}
 	this->right = piv->left;
 	piv->left = this;
+	piv->parent = this->parent;
+	this->parent = piv;
+
+	//Change the reference within the parent to the pivot
+	if (piv->parent->left == this)
+		piv->parent->left = piv;
+	else
+		piv->parent->right = piv;
 	return piv;
 }
 
@@ -34,9 +47,22 @@ Branch* Branch::rotateRight() {
 	/*Perform a right rotation rooted at this Branch. Returns
 	the pivot Branch.	See https://en.wikipedia.org/wiki/Tree_rotation for a better
 	diagram/explanation*/
+
 	Branch* piv = this->left;
+	if (this->root) {
+		this->root = false;
+		piv->root = true;
+	}
 	this->left = piv->right;
 	piv->right = this;
+	piv->parent = this->parent;
+	this->parent = piv;
+
+	//Change reference within the parent to the pivot
+	if (piv->parent->left == this)
+		piv->parent->left = piv;
+	else
+		piv->parent->right = piv;
 	return piv;
 }
 
@@ -49,37 +75,41 @@ Branch* Branch::rotateRight() {
 
 RBtree::RBtree(signed short int r) {
 	rootNode = new Branch(r);
+	rootNode->color = false;
+	rootNode->root = true;
 	depth = 1;
 	nodes = 1;
 	numInput = 1;
 }
 
 void RBtree::balance(Branch* curNode) {
-
+	
 	if (curNode->root) { 
 		curNode->color = false;
 		return;
 	}
-
 	//Parent is black 
 	else if (!curNode->parent->color) {
 		return;
 	}
 
-	//Parent and Uncle are red 1 (parent is a left child)
-	else if ((curNode->parent->parent->left == curNode->parent) && curNode->parent->parent->right->color) {
-		curNode->parent->color = false;
-		curNode->parent->parent->right->color = false;
-		curNode->parent->parent->color = true;
-		balance(curNode->parent->parent);
-	}
+	//If either of the two children of the parent is NULL (and therefore a black node) the two cases below are ruled out
+	else if (curNode->parent->parent->left != NULL && curNode->parent->parent->right != NULL) {
+		//Parent and Uncle are red 1 (parent is a left child)
+		if ((curNode->parent->parent->left == curNode->parent) && curNode->parent->parent->right->color) {
+			curNode->parent->color = false;
+			curNode->parent->parent->right->color = false;
+			curNode->parent->parent->color = true;
+			balance(curNode->parent->parent);
+		}
 
-	//Parent and Uncle are Red 2 (parent is a right child)
-	else if ((curNode->parent->parent->right == curNode->parent) && curNode->parent->parent->left->color) {
-		curNode->parent->color = false;
-		curNode->parent->parent->left->color = false;
-		curNode->parent->parent->color = true;
-		balance(curNode->parent->parent);
+		//Parent and Uncle are Red 2 (parent is a right child)
+		else if ((curNode->parent->parent->right == curNode->parent) && curNode->parent->parent->left->color) {
+			curNode->parent->color = false;
+			curNode->parent->parent->left->color = false;
+			curNode->parent->parent->color = true;
+			balance(curNode->parent->parent);
+		}
 	}
 
 	//Parent is Red and Uncle is Black
@@ -111,21 +141,29 @@ void RBtree::balance(Branch* curNode) {
 void RBtree::insert(signed short int val) {
 	numInput++;
 	Branch* current = rootNode;
+	Branch* last = NULL;
 	signed short int newD = 1;
 
 	//Standard BST Insert
 	while (true) {
 		if (current == NULL) {
-			Branch* temp = new Branch(val);
+			current = new Branch(val);
 			current->color = true;
+			current->parent = last;
+			if (current->value < last->value)
+				last->left = current;
+			else
+				last->right = current;
 			nodes++;
 			break;
 		}
 		else if (val < current->value) {
+			last = current;
 			current = current->left;
 			newD++;
 		}
 		else if (val > current->value) {
+			last = current;
 			current = current->right;
 			newD++;
 		}
@@ -158,8 +196,10 @@ void RBtree::traverse(Branch* curNode, stack<signed short int>* tobuild, bool* i
 		if (curNode->left != NULL) {
 			traverse(curNode->left, tobuild, instruct);
 		}
+		cout << curNode->value << " : " << curNode->times << endl;
 		for (int x = 0; x < curNode->times; x++)
 			tobuild->push(curNode->value);
+
 		if (curNode->right != NULL) {
 			traverse(curNode->right, tobuild, instruct);
 		}
