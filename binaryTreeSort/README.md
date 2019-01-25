@@ -14,4 +14,7 @@ So a full entry line will look something like:
 
 this will generate 100 random numbers and save the results to the bolded files in the subfolder of Release called "Results"
 
-## 
+## Notes
+
+I really enjoyed this project working in C++. In this past semester I had two classes that required me to program in C whereas previously I had done C++, so returning to the more modern and fully featured language was refreshing. The similarities between the two languages is also quite useful as I now know and appreciate some of the lower level specifics of C++ that derive from C such as memory management through pointers. I could easily convert the base data structure binary tree for use in C. 
+The main focus for me through this projecy however, was learning how to use VS2017's more advanced features
