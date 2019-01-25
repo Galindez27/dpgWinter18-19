@@ -38,9 +38,9 @@ private:
 
 public:
 	void insert(signed short int);
-	stack<signed short int>* genStack(bool);
+	stack<signed short int>* genStack(bool leastToGreatest);
 	RBtree(signed short int);
-	signed short int getDepth();
 	signed short int getNodes();
+	signed short int getInputs();
 };
 

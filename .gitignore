@@ -9,3 +9,7 @@
 *.opensdf
 *.sdf
 *.cachefile
+*.exe
+
+
+binaryTreeSort/binaryTreeSort/*.txt

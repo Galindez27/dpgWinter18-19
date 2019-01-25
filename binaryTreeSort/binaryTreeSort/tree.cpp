@@ -36,7 +36,9 @@ Branch* Branch::rotateLeft() {
 	this->parent = piv;
 
 	//Change the reference within the parent to the pivot
-	if (piv->parent->left == this)
+	if (piv->root)
+		return piv;
+	else if (piv->parent->left == this)
 		piv->parent->left = piv;
 	else
 		piv->parent->right = piv;
@@ -59,7 +61,9 @@ Branch* Branch::rotateRight() {
 	this->parent = piv;
 
 	//Change reference within the parent to the pivot
-	if (piv->parent->left == this)
+	if (piv->root)
+		return piv;
+	else if (piv->parent->left == this)
 		piv->parent->left = piv;
 	else
 		piv->parent->right = piv;
@@ -180,18 +184,20 @@ void RBtree::insert(signed short int val) {
 	balance(current);
 }
 
-signed short int RBtree::getDepth() {
-	return depth;
-}
 signed short int RBtree::getNodes() {
 	return nodes;
  }
+
+signed short int RBtree::getInputs()
+{
+	return this->numInput;
+}
 
 void RBtree::traverse(Branch* curNode, stack<signed short int>* tobuild, bool* instruct) {
 	/* traverse the tree recursivley and build the stack according to the intructed way.
 	True = least to greatest (all left branches first then right)
 	False = greatest to least (all right branches first then left.
-	I.E: if true, the last element of the stack will be the lowest value.*/
+	I.E: if true, the top element of the stack will be the lowest value.*/
 	if (!*instruct) {
 		if (curNode->left != NULL) {
 			traverse(curNode->left, tobuild, instruct);
@@ -209,6 +215,7 @@ void RBtree::traverse(Branch* curNode, stack<signed short int>* tobuild, bool* i
 		if (curNode->right != NULL) {
 			traverse(curNode->right, tobuild, instruct);
 		}
+		cout << curNode->value << " : " << curNode->times << endl;
 		for (int x = 0; x < curNode->times; x++)
 			tobuild->push(curNode->value);
 		if (curNode->left != NULL) {

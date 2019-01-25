@@ -23,12 +23,12 @@ int main(int argc, char** argv) {
 
 		
 		signed short int v = distr(gen);
-		randomFile << v << endl;
 		RBtree master = RBtree(v);
 		//Generate random numbers for the tree, capture numbers into log file for checking
 		int len = stoi(argv[4]);
 		for (int x = 1; x < len; x++) {
 			v = distr(gen);
+			cout << v << endl;
 			randomFile << v << endl;
 			master.insert(v);
 		}
@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
 		randomFile.close();
 
 		//output to files
-		for (int x = 0; x < len; x++) {
+		while (!gtlstack->empty()) {
 			gtl << gtlstack->top() << endl;
 			gtlstack->pop();
 

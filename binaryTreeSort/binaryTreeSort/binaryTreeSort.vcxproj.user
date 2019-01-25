@@ -3,6 +3,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LocalDebuggerCommand>$(TargetPath)</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>randomNumberFile.txt gtl.txt ltg.txt 10000</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>randomNumberFile.txt gtl.txt ltg.txt 100</LocalDebuggerCommandArguments>
   </PropertyGroup>
 </Project>
