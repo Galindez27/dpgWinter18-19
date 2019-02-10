@@ -1,3 +1,16 @@
 **/.spyprject/**
 **/*.o
 **/__pycache__
+
+# Visual C++ cache files
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+*.exe
+
+
+binaryTreeSort/binaryTreeSort/*.txt
+**/Debug/*

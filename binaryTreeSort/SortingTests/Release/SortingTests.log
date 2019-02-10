@@ -1,0 +1,8 @@
+﻿  stdafx.cpp
+  unittest1.cpp
+LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
+     Creating library D:\Docs\Memes and Dreams\dpgWinter18-19\binaryTreeSort\Release\SortingTests.lib and object D:\Docs\Memes and Dreams\dpgWinter18-19\binaryTreeSort\Release\SortingTests.exp
+  Generating code
+  All 268 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  SortingTests.vcxproj -> D:\Docs\Memes and Dreams\dpgWinter18-19\binaryTreeSort\Release\SortingTests.dll
